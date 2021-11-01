@@ -9,7 +9,6 @@ const useApi = (apiFunc: any) => {
     setLoading(true);
     const response = await apiFunc(...args);
     setLoading(false);
-    console.log(response);
     if (!response.ok) {
       setErrorMessage(response.data.exception);
       return setError(true);
