@@ -1,23 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text} from 'react-native';
 import appApi from '../api/appApi';
-import useApi from '../api/useApi';
+import useApi from '../hooks/useApi';
+import useStore from '../hooks/useStore';
 import Screen from '../Screen';
 
 const MainScreen = (): JSX.Element => {
-  const [countries, setCountries] = useState([]);
-  console.log('countries', countries.length);
+  const countriesState = useStore(state => state.countries);
+  const setCountriesState = useStore(state => state.setCountries);
+
   const getCountriesList: any = useApi(appApi.getAllCountries);
   const getList = async () => {
     await getCountriesList.request();
-    setCountries(getCountriesList?.data.Countries);
+    console.log(getCountriesList?.data.Countries);
+
+    setCountriesState(getCountriesList?.data.Countries);
   };
   useEffect(() => {
     getList();
   }, []);
   return (
     <Screen style={styles.screen}>
-      <Text> {countries.length}</Text>
+      <Text> {countriesState.length}</Text>
     </Screen>
   );
 };
