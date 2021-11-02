@@ -1,11 +1,12 @@
 import React from 'react';
-
-const top5Countries = (countriesList: any) => {
-  return countriesList
-    .sort((a: any, b: any) => {
-      return a.TotalConfirmed < b.TotalConfirmed ? 1 : -1;
-    })
-    .slice(0, 5);
+const PAGE_COUNT = 5;
+const topCountries = (countriesList: any, page: number) => {
+  if (countriesList != undefined)
+    return countriesList
+      .sort((a: any, b: any) => {
+        return a.TotalConfirmed < b.TotalConfirmed ? 1 : -1;
+      })
+      .slice(0, page * PAGE_COUNT);
 };
 
-export {top5Countries};
+export {topCountries};
