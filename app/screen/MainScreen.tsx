@@ -1,5 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, Button, FlatList, StyleSheet, Text} from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  Button,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import appApi from '../api/appApi';
 import useApi from '../hooks/useApi';
 import useStore from '../hooks/useStore';
@@ -8,24 +16,37 @@ import {top5Countries} from '../utils/utils';
 
 const MainScreen = (): JSX.Element => {
   const countriesState = useStore(state => state.countries);
-  const setCountriesState = useStore(state => state.setCountries);
-  const [top5, setTop5] = useState([]);
-  const getCountriesList: any = useApi(appApi.getAllCountries);
-  const getList = async () => {
-    await getCountriesList.request();
-    if (getCountriesList?.console.error) {
-      Alert.alert(getCountriesList.errorMessage);
-    } else {
-      setTop5(top5Countries(getCountriesList?.data.Countries));
-      console.log(top5);
-    }
 
-    setCountriesState(getCountriesList?.data.Countries);
-  };
+  const setCountriesState = useStore(state => state.setCountries);
+
+  const [top5, setTop5] = useState([]);
+
+  const {data, error, errorMessage, request, loading}: any = useApi(
+    appApi.getAllCountries,
+  );
+
   useEffect(() => {
-    getList();
+    request();
   }, []);
-  return (
+
+  useEffect(() => {
+    setCountriesState(data?.Countries);
+    if (data !== undefined && data?.Countries.length !== 0) {
+      setTop5(top5Countries(data?.Countries));
+    }
+  }, [data]);
+
+  return loading ? (
+    <View
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+      }}>
+      <ActivityIndicator size="large" />
+    </View>
+  ) : (
     <Screen style={styles.screen}>
       <FlatList
         data={top5}
@@ -39,6 +60,7 @@ const MainScreen = (): JSX.Element => {
         }}
         title="See more"
       />
+      {error && <Text>{errorMessage}</Text>}
     </Screen>
   );
 };

@@ -2,6 +2,7 @@ import {useState} from 'react';
 
 const useApi = (apiFunc: any) => {
   const [data, setData] = useState();
+  console.log('data', data);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
