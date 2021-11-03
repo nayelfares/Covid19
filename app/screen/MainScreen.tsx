@@ -93,7 +93,7 @@ const MainScreen = (): JSX.Element => {
             yAxisLabel=""
             yAxisSuffix=""
             yAxisInterval={1} // optional, defaults to 1
-            verticalLabelRotation={90}
+            verticalLabelRotation={45}
             chartConfig={{
               backgroundColor: '#e26a00',
               backgroundGradientFrom: '#fb8c00',

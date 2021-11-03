@@ -9,4 +9,13 @@ const topCountries = (countriesList: any, page: number) => {
       .slice(0, page * PAGE_COUNT);
 };
 
-export {topCountries};
+const filterList = (list: any, text: string): any => {
+  console.log('text', text);
+  const output = list.filter((country: any) =>
+    String(country.Country).toLowerCase().startsWith(text.toLowerCase()),
+  );
+  console.log('output', output);
+  return output;
+};
+
+export {topCountries, filterList};
