@@ -46,7 +46,6 @@ const MainScreen = (): JSX.Element => {
       setTop5(topCountries(data?.Countries, page));
 
       setGlobal(data.Global);
-      console.log('Global', global);
     }
   }, [data]);
 

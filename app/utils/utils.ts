@@ -9,13 +9,19 @@ const topCountries = (countriesList: any, page: number) => {
       .slice(0, page * PAGE_COUNT);
 };
 
-const filterList = (list: any, text: string): any => {
-  console.log('text', text);
-  const output = list.filter((country: any) =>
-    String(country.Country).toLowerCase().startsWith(text.toLowerCase()),
-  );
+const sortByKey = (countriesList: any, key: string) => {
+  const output = countriesList.sort((a: any, b: any) => {
+    return a[key] < b[key] ? 1 : -1;
+  });
   console.log('output', output);
   return output;
 };
 
-export {topCountries, filterList};
+const filterList = (list: any, text: string): any => {
+  const output = list.filter((country: any) =>
+    String(country.Country).toLowerCase().startsWith(text.toLowerCase()),
+  );
+  return output;
+};
+
+export {topCountries, filterList, sortByKey};
