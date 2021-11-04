@@ -4,14 +4,18 @@ const topCountries = (countriesList: any, page: number) => {
   if (countriesList != undefined)
     return countriesList
       .sort((a: any, b: any) => {
-        return a.TotalConfirmed < b.TotalConfirmed ? 1 : -1;
+        if (a.TotalConfirmed > b.TotalConfirmed) return -1;
+        if (a.TotalConfirmed < b.TotalConfirmed) return 1;
+        return 0;
       })
       .slice(0, page * PAGE_COUNT);
 };
 
 const sortByKey = (countriesList: any, key: string) => {
   const output = countriesList.sort((a: any, b: any) => {
-    return a[key] < b[key] ? 1 : -1;
+    if (a[key] > b[key]) return -1;
+    if (a[key] < b[key]) return 1;
+    return 0;
   });
   console.log('output', output);
   return output;

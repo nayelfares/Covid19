@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, TextInput} from 'react-native';
+import {FlatList, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import useStore from '../hooks/useStore';
 import Screen from '../Screen';
@@ -43,9 +43,36 @@ const CountriesListScreen = (): JSX.Element => {
       />
       <FlatList
         data={filteredList}
+        style={{marginTop: 16}}
         keyExtractor={(item: any) => item.ID}
         numColumns={1}
-        renderItem={({item}) => <Text>{item.Country}</Text>}
+        renderItem={({item}) => (
+          <View style={styles.card}>
+            <View style={styles.detailsContainer}>
+              <Text style={styles.title} numberOfLines={1}>
+                {item.Country}
+              </Text>
+              <Text style={styles.subTitle} numberOfLines={2}>
+                Total Confirmed : {item.TotalConfirmed}
+              </Text>
+              <Text style={styles.subTitle} numberOfLines={2}>
+                Total Deaths : {item.TotalDeaths}
+              </Text>
+              <Text style={styles.subTitle} numberOfLines={2}>
+                Total Recovered : {item.TotalRecovered}
+              </Text>
+              <Text style={styles.subTitle} numberOfLines={2}>
+                New Confirmed : {item.NewConfirmed}
+              </Text>
+              <Text style={styles.subTitle} numberOfLines={2}>
+                New Deaths : {item.NewDeaths}
+              </Text>
+              <Text style={styles.subTitle} numberOfLines={2}>
+                New Recovered : {item.NewRecovered}
+              </Text>
+            </View>
+          </View>
+        )}
       />
     </Screen>
   );
@@ -72,10 +99,29 @@ const styles = StyleSheet.create({
   },
   picker: {
     marginVertical: 30,
+    dropDownMaxHeight: 30,
+    margin: 0,
     width: 300,
     padding: 10,
     borderWidth: 1,
     borderColor: '#666',
+  },
+  card: {
+    borderRadius: 15,
+    backgroundColor: '#ffffff',
+    marginBottom: 5,
+    overflow: 'hidden',
+  },
+  detailsContainer: {
+    padding: 20,
+  },
+  subTitle: {
+    color: '#4ecdc4',
+    fontWeight: 'bold',
+  },
+  title: {
+    marginBottom: 7,
+    fontWeight: 'bold',
   },
 });
 
